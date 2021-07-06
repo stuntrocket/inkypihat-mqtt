@@ -1,16 +1,64 @@
-113  cd code/mqtt_spl_screen/
-114  python3 pizero_screen_subscriber.py 
-115  sudo python3 pizero_screen_subscriber.py 
-116  sudo apt-get install supervisor
-117  sudo vim /etc/systemd/system/screen.service
-118  sudo chmod 644 /etc/systemd/system/screen.service
-119  sudo systemctl daemon-reload
-120  sudo systemctl enable screen
-121  sudo systemctl start screen
-122  ls -la /home/pi/code/mqtt_spl_screen
-123  sudo vim /etc/systemd/system/screen.service
-124  sudo systemctl restart screen
-125  sudo systemctl daemon-reload
-126  sudo systemctl restart screen
+# InkyPiHat MQTT Notifier
 
-Updated...
+Listen for messages on MQTT broker and then display message on Inky PiHat screen.
+
+Requires an MQTT broker.
+
+## Installation
+
+> (update paths to match your system)
+
+```
+mkdir -p /home/pi/code
+git clone https://github.com/stuntrocket/inkypihat-mqtt.git inkypihat
+```
+
+```sudo vim /etc/systemd/system/inkyscreen.service```
+
+```
+[Unit]
+Description=MQTT Client Inky Service
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+User=root
+ConditionPathExists=!/home/pi/code/inkypihat/lockfile
+ExecStartPre=/bin/touch /home/pi/code/inkypihat/lockfile
+ExecStart=/usr/bin/python3 /home/pi/code/inkypihat/inkyscreen_subscriber.py
+ExecStopPost=/bin/rm -f /home/pi/code/inkypihat/lockfile
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```sudo chmod 644 /etc/systemd/system/inkyscreen.service```
+
+```sudo systemctl daemon-reload```
+
+```sudo systemctl enable inkyscreen```
+
+```sudo systemctl start inkyscreen```
+
+
+## Config
+
+In the config file, set the topic that the broker is listening to.
+
+> pizero_screen_config.py
+
+```
+pizero_screen_config = {
+'mqtt_broker': 'naspi.local',
+'mqtt_port': 1883,
+'mqtt_topic': 'house/notify/#'
+}
+```
+
+
+## Other Commands
+
+```sudo systemctl restart inkyscreen```
