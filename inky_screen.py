@@ -32,14 +32,13 @@ class InkyScreen(object):
     def message(self, message, bg): 
         scale_size = 1.0
         padding = 1
-        
-        
+                
         numchars = self.count_chars(message)
         font_size = self.get_font_size(numchars)
         
-        print(message)
-        print(numchars)
-        print(font_size)
+        # print(message)
+        # print(numchars)
+        # print(font_size)
         
         try:
             inky_display = auto(ask_user=True, verbose=True)
@@ -53,6 +52,7 @@ class InkyScreen(object):
             pass
         
         # parts = message.split('|')
+        inky_display.set_rotation(180)
 
         bold_font = ImageFont.truetype(SourceSansProSemibold, int(font_size * scale_size))
         
