@@ -15,11 +15,11 @@ MQTT_PORT = pizero_screen_config["mqtt_port"]
 myScreen = InkyScreen()
 client = mqtt.Client()
 
-myScreen.message("Initialising...", 'white')
+myScreen.message("Initialising", 'white')
 
 def on_connect(client, userdata, flags, rc):
     # logger.info("Connected with result code " + str(rc))
-    myScreen.message('Connected.', 'white')
+    myScreen.message('Connected', 'white')
     client.subscribe(MQTT_TOPIC)
 
 def on_message(client, userdata, msg):
