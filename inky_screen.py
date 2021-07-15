@@ -10,7 +10,7 @@ import sys
 from PIL import Image, ImageFont, ImageDraw
 from font_source_serif_pro import SourceSerifProSemibold
 from font_source_sans_pro import SourceSansProSemibold
-
+from font_fredoka_one import FredokaOne
 
 # import argparse
 # from PIL import Image, ImageFont, ImageDraw
@@ -52,9 +52,11 @@ class InkyScreen(object):
             pass
         
         # parts = message.split('|')
-        inky_display.set_rotation(180)
+        # inky_display.set_rotation(180)
 
-        bold_font = ImageFont.truetype(SourceSansProSemibold, int(font_size * scale_size))
+        # bold_font = ImageFont.truetype(SourceSansProSemibold, int(font_size * scale_size))
+        
+        bold_font = ImageFont.truetype(FredokaOne, int(font_size * scale_size))
         
         bgcolour = inky_display.WHITE            
         img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
@@ -197,57 +199,57 @@ class InkyScreen(object):
         
     
     def get_font_size(self, numchars):
-        font_size = 130
+        font_size = 125
         
         if numchars > 3:
-            font_size = 92
+            font_size = 90
             
         if numchars > 4:
-            font_size = 56
+            font_size = 54
             
         if numchars > 8:
-            font_size = 42
+            font_size = 40
             
         if numchars > 10:
-            font_size = 38
-            
-        if numchars > 16:
             font_size = 36
             
+        if numchars > 16:
+            font_size = 34
+            
         if numchars > 20:
-            font_size = 32
+            font_size = 30
             
         if numchars > 30:
-            font_size = 28
+            font_size = 26
             
         if numchars > 40:
-            font_size = 25
+            font_size = 23
             
         if numchars > 50:
-            font_size = 22
-            
-        if numchars > 75:
             font_size = 20
             
-        if numchars > 95:
+        if numchars > 75:
             font_size = 18
             
-        if numchars > 127:
+        if numchars > 95:
             font_size = 16
             
-        if numchars > 160:
+        if numchars > 127:
             font_size = 14
             
-        if numchars > 175:
+        if numchars > 160:
             font_size = 13
             
-        if numchars > 195:
+        if numchars > 175:
             font_size = 12
             
-        if numchars > 205:
-            font_size = 11  
+        if numchars > 195:
+            font_size = 11
             
-        if numchars > 220:
+        if numchars > 205:
             font_size = 10  
+            
+        # if numchars > 220:
+        #     font_size = 10  
             
         return font_size
